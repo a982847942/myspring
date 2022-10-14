@@ -1,0 +1,25 @@
+package nuaa.edu.springframework.beans;
+
+/**
+ * @Classname Property
+ * @Description
+ * @Date 2022/10/13 19:25
+ * @Created by brain
+ */
+public class PropertyValue {
+    private final String name;
+    private final Object value;
+
+    public PropertyValue(String name, Object value) {
+        this.name = name;
+        this.value = value;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Object getValue() {
+        return value;
+    }
+}

@@ -10,4 +10,5 @@ import nuaa.edu.springframework.beans.factory.support.BeanDefinition;
  */
 public interface BeanDefinitionRegistry {
     void registryBeanDefinition(String beanName, BeanDefinition beanDefinition);
+    boolean containsBeanDefinition(String beanName);
 }

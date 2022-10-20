@@ -52,10 +52,23 @@ public class test {
 
     @Test
     public void test_xml(){
+        //todo
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
         XMLBeanDefinitionReader xmlBeanDefinitionReader = new XMLBeanDefinitionReader(beanFactory);
         xmlBeanDefinitionReader.loadBeanDefinition("classpath:spring.xml");
-        UserService userService = (UserService)beanFactory.getBean("userService");
+//        UserService userService = (UserService)beanFactory.getBean("userService");
+        /**
+         * Q：1.第一次调用不传入args 第二次传入也没办法填充这些属性
+         * 2.如果构造器有两个参数类型相同的怎么办？（这里在Java中属于重载 重载不看参数名 看的是类型，因此考虑现实
+         * 情况不应该出现这种问题。但确实可以认为构成）
+         * eg:ctr(String name,Integer id)
+         *     call传入 name id 可以 传入 address id可以 但意义变了
+         */
+        UserService userService = (UserService)beanFactory.getBean("userService","哈哈",20);
+//        userService.queryInfo();
         userService.queryInfo2();
+//        UserService userService2 = (UserService)beanFactory.getBean("userService");
+//        userService.queryInfo();
+//        userService2.queryInfo2();
     }
 }

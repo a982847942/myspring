@@ -12,6 +12,8 @@ public class UserService {
     private UserDao userDao;
     private String uid;
 
+
+
     public  void  queryInfo(){
         System.out.println("用户姓名:" + name + "年龄:" + age);
     }

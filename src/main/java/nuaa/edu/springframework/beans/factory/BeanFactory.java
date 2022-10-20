@@ -1,5 +1,6 @@
 package nuaa.edu.springframework.beans.factory;
 
+import nuaa.edu.springframework.beans.BeansException;
 import nuaa.edu.springframework.beans.factory.support.BeanDefinition;
 
 import java.util.Map;
@@ -22,4 +23,5 @@ public interface  BeanFactory {
 //    }
    Object getBean(String beanName);
    Object getBean(String beanName,Object...args);
+   <T> T getBean(String name, Class<T> requiredType) throws BeansException;
 }

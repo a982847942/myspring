@@ -10,7 +10,6 @@ import java.util.Map;
  * @Date 2022/10/19 15:21
  * @Created by brain
  */
-// TODO: 2022/10/19
 public interface ListableBeanFactory extends BeanFactory{
     /**
      * 按照类型返回 Bean 实例

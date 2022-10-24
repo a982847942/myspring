@@ -1,11 +1,11 @@
 package nuaa.edu.springframework.beans.factory.config;
 
+import com.sun.org.apache.bcel.internal.generic.ANEWARRAY;
 import nuaa.edu.springframework.beans.BeansException;
 import nuaa.edu.springframework.beans.factory.ConfigurableListableBeanFactory;
 import nuaa.edu.springframework.beans.factory.support.BeanDefinition;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -15,7 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @Created by brain
  */
 public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFactory implements BeanDefinitionRegistry, ConfigurableListableBeanFactory {
-    public Map<String,BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<>();
+    public Map<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<>();
 
     @Override
     public BeanDefinition getBeanDefinition(String beanName) {
@@ -26,13 +26,14 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 
     @Override
     public void preInstantiateSingletons() throws BeansException {
-
+        beanDefinitionMap.keySet().forEach(this::getBean);
     }
 
     @Override
     public void registryBeanDefinition(String beanName, BeanDefinition beanDefinition) {
-        beanDefinitionMap.put(beanName,beanDefinition);
+        beanDefinitionMap.put(beanName, beanDefinition);
     }
+
 
     @Override
     public boolean containsBeanDefinition(String beanName) {
@@ -51,8 +52,13 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
         return result;
     }
 
+
     @Override
     public String[] getBeanDefinitionNames() {
-        return new String[0];
+        Set<String> nameString = beanDefinitionMap.keySet();
+        String[] res = nameString.toArray(new String[0]);
+        return res;
     }
+
+
 }

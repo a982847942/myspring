@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * @Classname test
+ * @Classname xmltest
  * @Description
  * @Date 2022/10/14 21:04
  * @Created by brain
@@ -52,7 +52,6 @@ public class test {
 
     @Test
     public void test_xml(){
-        //todo
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
         XMLBeanDefinitionReader xmlBeanDefinitionReader = new XMLBeanDefinitionReader(beanFactory);
         xmlBeanDefinitionReader.loadBeanDefinition("classpath:spring.xml");

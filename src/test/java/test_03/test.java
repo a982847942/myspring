@@ -6,7 +6,7 @@ import nuaa.edu.springframework.context.support.ClassPathXmlApplicationContext;
 import org.junit.Test;
 
 /**
- * @Classname test
+ * @Classname xmltest
  * @Description
  * @Date 2022/10/19 16:12
  * @Created by brain
@@ -42,6 +42,19 @@ public class test {
 
         // 2. 获取Bean对象调用方法
         UserService userService =  applicationContext.getBean("userService", UserService.class);
+        String result = userService.queryUserInfo();
+        System.out.println("测试结果：" + result);
+    }
+
+    //Bean的初始化和销毁方法
+    @Test
+    public void test_xml2() {
+        // 1.初始化 BeanFactory
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:test03_2.xml");
+        applicationContext.registerShutdownHook();
+
+        // 2. 获取Bean对象调用方法
+        UserService userService = applicationContext.getBean("userService", UserService.class);
         String result = userService.queryUserInfo();
         System.out.println("测试结果：" + result);
     }

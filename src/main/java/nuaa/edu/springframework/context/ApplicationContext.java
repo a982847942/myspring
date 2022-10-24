@@ -8,5 +8,5 @@ import nuaa.edu.springframework.beans.factory.ListableBeanFactory;
  * @Date 2022/10/19 15:23
  * @Created by brain
  */
-public interface ApplicationContext extends ListableBeanFactory {
+public interface ApplicationContext extends ListableBeanFactory ,ApplicationEventPublisher{
 }

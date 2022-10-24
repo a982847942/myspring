@@ -9,7 +9,7 @@ import nuaa.edu.springframework.beans.factory.BeanFactory;
 import org.junit.Test;
 
 /**
- * @Classname test
+ * @Classname xmltest
  * @Description
  * @Date 2022/10/13 15:14
  * @Created by brain

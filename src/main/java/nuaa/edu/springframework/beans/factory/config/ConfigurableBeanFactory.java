@@ -17,7 +17,7 @@ public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, Single
     //添加beanPostProcessor
     void addBeanPostProcessor(BeanPostProcessor beanPostProcessor);
     //销毁单例对象
-//    void destroySingletons();
+    void destroySingletons();
 
     /**
      * Add a String resolver for embedded values such as annotation attributes.

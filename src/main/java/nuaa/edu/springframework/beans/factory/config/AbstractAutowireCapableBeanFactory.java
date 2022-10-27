@@ -110,6 +110,12 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 
     private Object initializeBean(String beanName, Object bean, BeanDefinition beanDefinition) {
         // invokeAwareMethods
+        /*
+        为什么ApplicationContextAware需要借助ApplicationContextAwareProcessor来实现？
+        因为在这里无法感知ApplicationContext对象，需要借助一个东西先把applicaitonContext保存
+        然后还能在bean的创建过程的某一环节将其设置到实现了该接口的类.
+        因此BeanPostProcessor是最合适的
+         */
         if (bean instanceof Aware) {
             if (bean instanceof BeanFactoryAware) {
                 ((BeanFactoryAware) bean).setBeanFactory(this);

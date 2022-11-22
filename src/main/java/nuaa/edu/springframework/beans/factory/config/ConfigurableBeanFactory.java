@@ -2,6 +2,7 @@ package nuaa.edu.springframework.beans.factory.config;
 
 import nuaa.edu.springframework.beans.factory.HierarchicalBeanFactory;
 import nuaa.edu.springframework.beans.factory.support.SingletonBeanRegistry;
+import nuaa.edu.springframework.util.StringValueResolver;
 
 /**
  * @Classname ConfigurableBeanFactory
@@ -24,7 +25,7 @@ public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, Single
      * @param valueResolver the String resolver to apply to embedded values
      * @since 3.0
      */
-//    void addEmbeddedValueResolver(StringValueResolver valueResolver);
+    void addEmbeddedValueResolver(StringValueResolver valueResolver);
 
     /**
      * Resolve the given embedded value, e.g. an annotation attribute.
@@ -32,5 +33,5 @@ public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, Single
      * @return the resolved value (may be the original value as-is)
      * @since 3.0
      */
-//    String resolveEmbeddedValue(String value);
+    String resolveEmbeddedValue(String value);
 }

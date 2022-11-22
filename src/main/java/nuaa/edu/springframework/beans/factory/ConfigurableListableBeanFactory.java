@@ -16,4 +16,5 @@ public interface ConfigurableListableBeanFactory extends ListableBeanFactory, Au
 
     //提前实例化单例bean对象
     void preInstantiateSingletons() throws BeansException;
+
 }

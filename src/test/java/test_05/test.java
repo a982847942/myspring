@@ -51,8 +51,9 @@ public class test {
     public void test(){
         ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:test05.xml");
         IUserDao userDao = applicationContext.getBean("proxyUserDao", IUserDao.class);
-//        System.out.println(userDao + "十六进制哈希：" + Integer.toHexString(userDao.hashCode()));
+        Integer.toHexString(userDao.hashCode());
+        System.out.println(userDao + "十六进制哈希：" + Integer.toHexString(userDao.hashCode()));
         IUserDao userDao1 = applicationContext.getBean("proxyUserDao", IUserDao.class);
-//        System.out.println(userDao1 + "十六进制哈希：" + Integer.toHexString(userDao1.hashCode()));
+        System.out.println(userDao1 + "十六进制哈希：" + Integer.toHexString(userDao1.hashCode()));
     }
 }

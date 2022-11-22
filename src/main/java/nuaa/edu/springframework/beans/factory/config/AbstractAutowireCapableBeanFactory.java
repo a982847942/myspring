@@ -27,9 +27,17 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
     protected Object creatBean(String beanName, BeanDefinition beanDefinition, Object... args) throws BeansException {
         Object bean;
         try {
+            // 判断是否返回代理 Bean 对象
+            bean = resolveBeforeInstantiation(beanName, beanDefinition);
+            if (null != bean) {
+                return bean;
+            }
+
             //实例化bean 这里的BeanDefinition已经被改变了
 //            bean = beanDefinition.getBeanClass().newInstance();
             bean = creatBeanInstance(beanName, beanDefinition, args);
+            // 在设置 Bean 属性之前，允许 BeanPostProcessor 修改属性值
+            applyBeanPostProcessorsBeforeApplyingPropertyValues(beanName, bean, beanDefinition);
             //填充属性
             applyPropertyValues(beanName, bean, beanDefinition);
             // 执行 Bean 的初始化方法和 BeanPostProcessor 的前置和后置处理方法
@@ -54,7 +62,26 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         }
     }
 
-
+    /**
+     * 在设置 Bean 属性之前，允许 BeanPostProcessor 修改属性值
+     *
+     * @param beanName
+     * @param bean
+     * @param beanDefinition
+     */
+    protected void applyBeanPostProcessorsBeforeApplyingPropertyValues(String beanName, Object bean, BeanDefinition beanDefinition) {
+        for (BeanPostProcessor beanPostProcessor : getBeanPostProcessors()) {
+            if (beanPostProcessor instanceof InstantiationAwareBeanPostProcessor){
+                PropertyValues pvs = ((InstantiationAwareBeanPostProcessor) beanPostProcessor).postProcessPropertyValues(beanDefinition.getPropertyValues(), bean, beanName);
+                if (null != pvs) {
+                    for (PropertyValue propertyValue : pvs.getPropertyValues()) {
+//                        beanDefinition.getPropertyValues().addPropertyValue(propertyValue);
+                        beanDefinition.getPropertyValues().setPropertyValue(propertyValue.getName(),propertyValue.getValue());
+                    }
+                }
+            }
+        }
+    }
     public void applyPropertyValues(String beanName, Object bean, BeanDefinition beanDefinition) {
         try {
             PropertyValues pv = beanDefinition.getPropertyValues();
@@ -184,5 +211,24 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
             result = current;
         }
         return result;
+    }
+
+    protected Object resolveBeforeInstantiation(String beanName, BeanDefinition beanDefinition) {
+        Object bean = applyBeanPostProcessorBeforeInstantiation(beanDefinition.getBeanClass(), beanName);
+        if (null != bean) {
+            bean = applyBeanPostProcessorsAfterInitialization(bean, beanName);
+        }
+        return bean;
+    }
+
+    // 注意，此方法为新增方法，与 “applyBeanPostProcessorBeforeInitialization” 是两个方法
+    public Object applyBeanPostProcessorBeforeInstantiation(Class<?> beanClass, String beanName) throws BeansException {
+        for (BeanPostProcessor processor : getBeanPostProcessors()) {
+            if (processor instanceof InstantiationAwareBeanPostProcessor) {
+                Object result = ((InstantiationAwareBeanPostProcessor)processor).postProcessBeforeInstantiation(beanClass, beanName);
+                if (null != result) return result;
+            }
+        }
+        return null;
     }
 }
